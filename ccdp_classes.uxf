@@ -1,0 +1,67 @@
+<diagram program="umletino" version="15.1"><zoom_level>8</zoom_level><help_text>Space for diagram notes</help_text><element><id>UMLClass</id><coordinates><x>544</x><y>232</y><w>200</w><h>112</h></coordinates><panel_attributes>Dossier
+--
+- id : String
+- titre : String
+--
++ addEx ()
++ removeEx ()
++ createBloc ()
++ deleteBloc ()</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>952</x><y>192</y><w>200</w><h>152</h></coordinates><panel_attributes>User
+--
+- id : String
+- firstname : String
+- lastname : String
+- email : String
+- mdp : String
+--
++ createDp ()
++ deleteDp ()
++ createEx ()
++ deleteEx ()</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>848</x><y>544</y><w>200</w><h>112</h></coordinates><panel_attributes>Exemple
+--
+- titre : String
+--
++ addCp ()
++ removeCp ()
+
+</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>96</x><y>560</y><w>200</w><h>112</h></coordinates><panel_attributes>Compétence
+--
+- titre : String
+--
+</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>96</x><y>232</y><w>200</w><h>112</h></coordinates><panel_attributes>Bloc
+--
+- titre : String
+--
++ createCp ()
++ deleteCp ()
+</panel_attributes><additional_attributes></additional_attributes></element><element><id>Relation</id><coordinates><x>736</x><y>256</y><w>232</w><h>40</h></coordinates><panel_attributes>lt=&lt;&lt;&lt;&lt;-
+m1=1
+m2=0..1
+appartient à &gt;
+&lt; possède</panel_attributes><additional_attributes>270;20;10;20</additional_attributes></element><element><id>Relation</id><coordinates><x>288</x><y>304</y><w>272</w><h>40</h></coordinates><panel_attributes>lt=&lt;&lt;&lt;&lt;-
+m1=1
+m2=0..4
+&lt; est composé de</panel_attributes><additional_attributes>320;20;10;20</additional_attributes></element><element><id>Relation</id><coordinates><x>184</x><y>336</y><w>96</w><h>240</h></coordinates><panel_attributes>lt=&lt;&lt;&lt;&lt;-
+m1=1
+m2=0..4
+ v
+est composé de</panel_attributes><additional_attributes>10;10;10;280</additional_attributes></element><element><id>Relation</id><coordinates><x>1016</x><y>336</y><w>88</w><h>224</h></coordinates><panel_attributes>lt=&lt;&lt;&lt;&lt;-
+m1=1
+m2=0..n
+appartient à ^
+</panel_attributes><additional_attributes>10;10;10;260</additional_attributes></element><element><id>Relation</id><coordinates><x>288</x><y>336</y><w>576</w><h>272</h></coordinates><panel_attributes>lt=-
+m1=0..1
+m2=0..3
+</panel_attributes><additional_attributes>10;10;700;320</additional_attributes></element><element><id>Relation</id><coordinates><x>288</x><y>616</y><w>576</w><h>40</h></coordinates><panel_attributes>lt=-
+m1=0..n
+m2=0..n
+</panel_attributes><additional_attributes>10;20;700;20</additional_attributes></element><element><id>UMLClass</id><coordinates><x>288</x><y>32</y><w>632</w><h>104</h></coordinates><panel_attributes>Traduction MLD
+--
+User = (id, firstname, lastname, email, mdp)
+Dossier = (id, titre, #idUser)
+Bloc = (id, titre, #idDossier)
+Competence = (id, titre, #idBloc)
+Exemple = (id, titre, #idUser, #idBloc)
+ExempleCompetence = (#idExemple, #idCompetence)
+
+</panel_attributes><additional_attributes></additional_attributes></element></diagram>
