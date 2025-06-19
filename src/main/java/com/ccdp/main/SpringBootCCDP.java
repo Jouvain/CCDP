@@ -4,10 +4,10 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class SpringBootMongodb1Application {
+public class SpringBootCCDP {
 
 	public static void main(String[] args) {
-		SpringApplication.run(SpringBootMongodb1Application.class, args);
+		SpringApplication.run(SpringBootCCDP.class, args);
 	}
 
 }
