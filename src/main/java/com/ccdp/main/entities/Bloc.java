@@ -1,9 +1,15 @@
 package com.ccdp.main.entities;
 
+import java.util.List;
+
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -23,4 +29,11 @@ public class Bloc {
 	 @NonNull
 	 String title;
 	 
+	 @ManyToOne
+	 @JoinColumn(name = "dossier_id", nullable = false)
+	 Dossier dossier;
+	 
+	 @OneToMany(mappedBy = "bloc", cascade = CascadeType.ALL, orphanRemoval = true)
+	 List<Competence> competences;
+	 //
 }

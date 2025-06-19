@@ -30,5 +30,12 @@ public class Dossier {
 	Integer id;
 	@NonNull
 	String title;
+	
+	@OneToOne
+	@JoinColumn(name = "user_id", nullable = false, unique = true)
+	User user;
+	
+	@OneToMany(mappedBy = "dossier", cascade = CascadeType.ALL, orphanRemoval = true)
+	List<Bloc> blocs;
 
 }
