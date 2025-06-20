@@ -27,6 +27,7 @@ public class SecurityConfig {
 	    .dispatcherTypeMatchers(DispatcherType.FORWARD, DispatcherType.INCLUDE).permitAll()
 	    .requestMatchers("/home").permitAll()
 	    .requestMatchers("/login").permitAll()
+	    .requestMatchers("/signup").permitAll()
 	    .requestMatchers("/").permitAll()
 	    .requestMatchers("/header").permitAll()
 	    .requestMatchers("/css/**").permitAll()

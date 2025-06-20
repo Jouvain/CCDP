@@ -29,7 +29,7 @@
 					<Li>Ne manquez aucune CP, et comptez vos combbos !</Li>
 					<Li>Ajoutez, supprimez et affectez facilement vos exemples !</Li>
 				</ul>
-				<a href="#"><button>S'inscrire</button></a>
+				<a href="${pageContext.request.contextPath }/signup"><button>S'inscrire</button></a>
 			</c:otherwise>
 		</c:choose>
 
