@@ -80,6 +80,41 @@ public class DossierController {
 		return "redirect:/dossier";
 	}
 	
+	@GetMapping("/deleteDossier")
+	public String deleteDossier(@RequestParam Integer dossierId) {
+		var userAuth = SecurityContextHolder.getContext().getAuthentication();
+		if(userAuth != null && !"anonymousUser".equals(userAuth.getPrincipal())) {
+			String username = SecurityContextHolder.getContext().getAuthentication().getName();
+			User user = userRepository.findByUsername(username);
+			Dossier dossier = user.getDossier();
+			if(dossier != null) {
+	            user.setDossier(null); 
+	            userRepository.save(user); 
+	            dossierRepository.deleteById(dossier.getId());
+			}			
+		}	
+		return "dossier";
+	}
+	
+	@GetMapping("/deleteBloc")
+	public String deleteBloc(@RequestParam Integer blocId, Model model) {
+		var userAuth = SecurityContextHolder.getContext().getAuthentication();
+		if(userAuth != null && !"anonymousUser".equals(userAuth.getPrincipal())) {
+			String username = SecurityContextHolder.getContext().getAuthentication().getName();
+			User user = userRepository.findByUsername(username);
+			Dossier dossier = user.getDossier();
+			if(dossier != null) {
+				Bloc bloc = blocRepository.findById(blocId).orElseThrow();
+				dossier.getBlocs().removeIf(b -> b.getId().equals(blocId));
+				bloc.setDossier(null);
+				dossierRepository.save(dossier);
+				blocRepository.delete(bloc);
+				model.addAttribute("dossier", dossier);
+			}			
+		}
+		return "redirect:/dossier";
+	}
+	
 	
 	
 	@GetMapping("/addBloc")

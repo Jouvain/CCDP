@@ -14,9 +14,11 @@
 		<c:choose>
 			<c:when test="${hasDossier }">
 				<h2>Votre dossier : ${dossier.title}</h2>
+				<a href="${pageContext.request.contextPath }/deleteDossier?dossierId=${dossier.id}"><button>Effacer le DP</button></a>
 				<a href="${pageContext.request.contextPath }/addBloc"><button>Ajouter un bloc</button></a>
 				<c:forEach var="bloc" items="${dossier.blocs}">
 					<h3>Bloc : ${bloc.title}</h3>
+					<a href="${pageContext.request.contextPath }/deleteBloc?blocId=${bloc.id}"><button>Effacer le ${bloc.title} </button></a>
 					<a href="${pageContext.request.contextPath }/addCp?blocId=${bloc.id}"><button>Ajouter une compétence</button></a>
 					<ul>
 						<c:forEach var="cp" items="${bloc.competences}">
