@@ -36,6 +36,10 @@ public class Exemple {
 	@ManyToOne
 	@JoinColumn(name = "user_id", nullable = false)
 	User user;
+	
+    @ManyToOne
+    @JoinColumn(name = "bloc_id", nullable = false)
+    Bloc bloc;
 
 	@ManyToMany(fetch = FetchType.EAGER)
 	@JoinTable(

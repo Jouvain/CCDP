@@ -35,5 +35,8 @@ public class Bloc {
 	 
 	 @OneToMany(mappedBy = "bloc", cascade = CascadeType.ALL, orphanRemoval = true)
 	 List<Competence> competences;
-	 //
+	 
+	 @OneToMany(mappedBy = "bloc", cascade = CascadeType.ALL, orphanRemoval = true)
+	 List<Exemple> exemples;
+	 
 }
