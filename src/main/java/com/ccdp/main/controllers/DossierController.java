@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.ccdp.main.repositories.BlocRepository;
+import com.ccdp.main.repositories.CompetenceRepository;
 import com.ccdp.main.repositories.DossierRepository;
 import com.ccdp.main.repositories.UserRepository;
 
@@ -31,6 +32,9 @@ public class DossierController {
 	
 	@Autowired
 	private BlocRepository blocRepository;
+	
+	@Autowired
+	private CompetenceRepository competenceRepository;
 
 	@GetMapping("/dossier")
 	public String dossier(Model model) {
@@ -109,6 +113,27 @@ public class DossierController {
 				bloc.setDossier(null);
 				dossierRepository.save(dossier);
 				blocRepository.delete(bloc);
+				model.addAttribute("dossier", dossier);
+			}			
+		}
+		return "redirect:/dossier";
+	}
+	
+	@GetMapping("/deleteCp")
+	public String deleteCp(@RequestParam Integer cpId, @RequestParam Integer blocId, Model model) {
+		var userAuth = SecurityContextHolder.getContext().getAuthentication();
+		if(userAuth != null && !"anonymousUser".equals(userAuth.getPrincipal())) {
+			String username = SecurityContextHolder.getContext().getAuthentication().getName();
+			User user = userRepository.findByUsername(username);
+			Dossier dossier = user.getDossier();
+			if(dossier != null) {
+				Bloc bloc = blocRepository.findById(blocId).orElseThrow();
+				Competence competence = competenceRepository.findById(cpId).orElseThrow();
+				bloc.getCompetences().removeIf(c -> c.getId().equals(cpId));
+				competence.setBloc(null);
+				competenceRepository.save(competence);
+				blocRepository.save(bloc);
+				dossierRepository.save(dossier);
 				model.addAttribute("dossier", dossier);
 			}			
 		}
