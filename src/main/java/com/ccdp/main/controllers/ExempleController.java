@@ -8,7 +8,9 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
+import com.ccdp.main.entities.Bloc;
 import com.ccdp.main.entities.Dossier;
 import com.ccdp.main.entities.Exemple;
 import com.ccdp.main.entities.User;
@@ -71,6 +73,41 @@ public class ExempleController {
 		}
 		return "redirect:/exemples";
 	}
+	
+	
+	@GetMapping("/deleteExemple")
+	public String deleteExemple(@RequestParam Integer exempleId, Model model) {
+		var userAuth = SecurityContextHolder.getContext().getAuthentication();
+		if(userAuth != null && !"anonymousUser".equals(userAuth.getPrincipal())) {
+			String username = SecurityContextHolder.getContext().getAuthentication().getName();
+			User user = userRepository.findByUsername(username);
+			Exemple exemple = exempleRepository.findById(exempleId).orElseThrow();
+			user.getExemples().removeIf(e -> e.getId().equals(exempleId));
+			exemple.setUser(null);
+			exempleRepository.delete(exemple);
+			userRepository.save(user);
+			model.addAttribute("user", user);
+			model.addAttribute("logged", true);
+			model.addAttribute("exemples", user.getExemples());
+			model.addAttribute("hasExemple", !user.getExemples().isEmpty());				
+		}	
+		return "redirect:/exemples";
+	}
+	
+	@GetMapping("/integrateCp")
+	public String integrateCp(@RequestParam Integer exempleId, Model model) {
+		var userAuth = SecurityContextHolder.getContext().getAuthentication();
+		if(userAuth != null && !"anonymousUser".equals(userAuth.getPrincipal())) {
+			
+		}
+		return "";
+	}
+	
+	@PostMapping("/integrateCp")
+	public String integrateCp() {
+		return "";
+	}
+
 	
 	
 	
