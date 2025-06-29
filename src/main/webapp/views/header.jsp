@@ -11,7 +11,7 @@
 				<c:when test="${not empty pageContext.request.userPrincipal}">
 					<!-- Utilisateur connecté -->
 					<li><a href="${pageContext.request.contextPath}/dossier">Dossier</a></li>
-					<li><a href="${pageContext.request.contextPath}/exemple">Exemples</a></li>
+					<li><a href="${pageContext.request.contextPath}/exemples">Exemples</a></li>
 					<li><a href="${pageContext.request.contextPath}/compte">Compte</a></li>
 					<li><a href="${pageContext.request.contextPath}/logout"><button>Déconnexion</button></a></li>
 				</c:when>

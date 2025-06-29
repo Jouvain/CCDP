@@ -38,7 +38,7 @@ public class Exemple {
 	User user;
 	
     @ManyToOne
-    @JoinColumn(name = "bloc_id", nullable = false)
+    @JoinColumn(name = "bloc_id", nullable = true)
     Bloc bloc;
 
 	@ManyToMany(fetch = FetchType.EAGER)

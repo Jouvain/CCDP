@@ -8,15 +8,26 @@
 <title>CCDP : Exemples</title>
 </head>
 <body>
+	<jsp:include page="header.jsp" />
 	<h1>Bonjour ${user.firstname } !</h1>
-	<p>La liste de vos exemples de pratique professionnelle :</p>
-	<c:forEach var="ex" items="${user.exemples }">
-		<h2>Intitulé : ${ex.title }</h2>
-		<c:forEach var="cp" items="${ex.competences }" >
-			<h3>CP : ${cp.title } </h3>
-		</c:forEach>
-		<a><button>Ajouter une CP</button></a>
-	</c:forEach>
+	<c:choose>
+		<c:when test="${hasExemple }">
+			<p>La liste de vos exemples de pratique professionnelle :</p>
+			<c:forEach var="ex" items="${user.exemples }">
+				<h2>Intitulé : ${ex.title }</h2>
+				<c:forEach var="cp" items="${ex.competences }" >
+					<h3>CP : ${cp.title } </h3>
+				</c:forEach>
+				<a><button>Ajouter une CP</button></a>
+			</c:forEach>
+			<a href="${pageContext.request.contextPath }/addExemple" ><button>Ajouter un exemple</button></a>
+		</c:when>
+		<c:otherwise>
+			<p>Vous n'avez pas encore d'exemple !</p>
+			<a href="${pageContext.request.contextPath }/addExemple" ><button>Ajouter un exemple</button></a>
+		</c:otherwise>
+	</c:choose>
+
 
 </body>
 </html>
