@@ -1,5 +1,8 @@
 package com.ccdp.main.controllers;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
@@ -11,9 +14,11 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.ccdp.main.entities.Bloc;
+import com.ccdp.main.entities.Competence;
 import com.ccdp.main.entities.Dossier;
 import com.ccdp.main.entities.Exemple;
 import com.ccdp.main.entities.User;
+import com.ccdp.main.repositories.CompetenceRepository;
 import com.ccdp.main.repositories.ExempleRepository;
 import com.ccdp.main.repositories.UserRepository;
 
@@ -27,6 +32,9 @@ public class ExempleController {
 	
 	@Autowired
 	ExempleRepository exempleRepository;
+	
+	@Autowired
+	CompetenceRepository competenceRepository;
 	
 	@GetMapping("/exemples")
 	public String getExemples(Model model) {
@@ -95,19 +103,63 @@ public class ExempleController {
 	}
 	
 	@GetMapping("/integrateCp")
-	public String integrateCp(@RequestParam Integer exempleId, Model model) {
+	public String integrateCp(@RequestParam Integer exempleId,  Model model) {
 		var userAuth = SecurityContextHolder.getContext().getAuthentication();
 		if(userAuth != null && !"anonymousUser".equals(userAuth.getPrincipal())) {
-			
+			String username = SecurityContextHolder.getContext().getAuthentication().getName();
+			User user = userRepository.findByUsername(username);
+			Dossier dossier = user.getDossier();
+			List<Bloc> blocs = dossier.getBlocs();
+			List<Competence> competences = new ArrayList<Competence>();
+			for (Bloc bloc : blocs) {
+				List<Competence> cps = bloc.getCompetences();
+				System.out.println(bloc.getCompetences());
+				for (Competence competence : cps) {
+					competences.add(competence);
+				}
+			}
+			for (Competence competence : competences) {
+				System.out.println("Compétence retenue = " + competence.getTitle());
+			}
+			Exemple exemple = exempleRepository.findById(exempleId).orElseThrow();
+//			model.addAttribute("user", user);			
+			model.addAttribute("competences", competences);			
+			model.addAttribute("exemple", exemple);
 		}
-		return "";
+		return "integrateCp";
 	}
 	
-	@PostMapping("/integrateCp")
-	public String integrateCp() {
-		return "";
-	}
 
+	@PostMapping("/integrateCp")
+	public String integrateCp(@RequestParam("cpId") Integer cpId, @RequestParam("exempleId") Integer exempleId,  Model model) {
+		var userAuth = SecurityContextHolder.getContext().getAuthentication();
+		if(userAuth != null && !"anonymousUser".equals(userAuth.getPrincipal())) {
+			String username = SecurityContextHolder.getContext().getAuthentication().getName();
+			User user = userRepository.findByUsername(username);
+			Dossier dossier = user.getDossier();
+			List<Bloc> blocs = dossier.getBlocs();
+			List<Competence> competences = new ArrayList<Competence>();
+			for (Bloc bloc : blocs) {
+				List<Competence> cps = bloc.getCompetences();
+				for (Competence competence : cps) {
+					competences.add(competence);
+				}
+			}
+			Competence competence = competenceRepository.findById(cpId).orElseThrow();
+			Exemple exemple = exempleRepository.findById(exempleId).orElseThrow();
+			
+			exemple.getCompetences().add(competence);
+			
+			exempleRepository.save(exemple);
+			
+			
+			model.addAttribute("user", user);
+			model.addAttribute("logged", true);
+			model.addAttribute("exemples", user.getExemples());
+			model.addAttribute("hasExemple", !user.getExemples().isEmpty());
+		}
+		return "redirect:/exemples";
+	}
 	
 	
 	

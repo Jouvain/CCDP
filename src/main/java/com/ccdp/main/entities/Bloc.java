@@ -16,12 +16,14 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
+import lombok.ToString;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
 @Builder
 @RequiredArgsConstructor
+@ToString(exclude = {"competences", "exemples"})
 public class Bloc {
 	 @Id
 	 @GeneratedValue(strategy = GenerationType.IDENTITY)

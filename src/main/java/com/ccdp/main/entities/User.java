@@ -15,6 +15,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
+import lombok.ToString;
 
 @Data
 @AllArgsConstructor
@@ -22,6 +23,7 @@ import lombok.RequiredArgsConstructor;
 @Entity
 @Builder
 @RequiredArgsConstructor
+@ToString(exclude = "dossier")
 public class User {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)

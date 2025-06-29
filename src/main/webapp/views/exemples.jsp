@@ -18,7 +18,7 @@
 				<c:forEach var="cp" items="${ex.competences }" >
 					<h3>CP : ${cp.title } </h3>
 				</c:forEach>
-				<a><button>Ajouter une CP</button></a>
+				<a href="${pageContext.request.contextPath }/integrateCp?exempleId=${ex.id}" ><button>Ajouter une CP</button></a>
 				<a href="${pageContext.request.contextPath }/deleteExemple?exempleId=${ex.id}" ><button>Effacer l'exemple ${ex.title }</button></a>
 			</c:forEach>
 			<a href="${pageContext.request.contextPath }/addExemple" ><button>Ajouter un exemple</button></a>
