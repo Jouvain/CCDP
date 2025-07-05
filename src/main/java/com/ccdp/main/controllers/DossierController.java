@@ -1,5 +1,7 @@
 package com.ccdp.main.controllers;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
@@ -114,7 +116,28 @@ public class DossierController {
 			String username = SecurityContextHolder.getContext().getAuthentication().getName();
 			User user = userRepository.findByUsername(username);
 			Dossier dossier = user.getDossier();
+			List<Exemple> exemples = user.getExemples();
 			if(dossier != null) {
+				
+				if(!exemples.isEmpty()) {
+					for (Exemple exemple : exemples) {
+						Boolean modif = false;
+						List<Competence> cps = exemple.getCompetences();
+						if(exemple.getCompetences().removeIf(cp -> cp.getBloc() != null && cp.getBloc().getId().equals(blocId))) {
+							modif = true;
+						}
+						
+					    if (exemple.getBloc() != null && exemple.getBloc().getId().equals(blocId)) {
+					        exemple.setBloc(null);
+					        modif = true;
+					    }
+					    if(modif) {
+					    	exempleRepository.save(exemple);
+						}
+				    }
+						
+				}				
+				
 				Bloc bloc = blocRepository.findById(blocId).orElseThrow();
 				dossier.getBlocs().removeIf(b -> b.getId().equals(blocId));
 				bloc.setDossier(null);
@@ -132,12 +155,25 @@ public class DossierController {
 		if(userAuth != null && !"anonymousUser".equals(userAuth.getPrincipal())) {
 			String username = SecurityContextHolder.getContext().getAuthentication().getName();
 			User user = userRepository.findByUsername(username);
+			List<Exemple> exemples = user.getExemples();
+
 			Dossier dossier = user.getDossier();
 			if(dossier != null) {
 				Bloc bloc = blocRepository.findById(blocId).orElseThrow();
 				Competence competence = competenceRepository.findById(cpId).orElseThrow();
+				
+				if(!exemples.isEmpty()) {
+					for (Exemple exemple : exemples) {
+						List<Competence> cps = exemple.getCompetences();
+						cps.removeIf(cp -> cp.getId().equals(cpId));
+						exemple.setCompetences(cps);
+						exempleRepository.save(exemple);
+					}
+				}
+				
 				bloc.getCompetences().removeIf(c -> c.getId().equals(cpId));
 				competence.setBloc(null);
+				
 				competenceRepository.save(competence);
 				blocRepository.save(bloc);
 				dossierRepository.save(dossier);

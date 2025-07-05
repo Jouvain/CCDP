@@ -162,5 +162,25 @@ public class ExempleController {
 	}
 	
 	
+	@PostMapping("/removeCpFromEx")
+	private String removeCpFromEx(@RequestParam Integer cpId, @RequestParam Integer exempleId, Model model) {
+		var userAuth = SecurityContextHolder.getContext().getAuthentication();
+		if(userAuth != null && !"anonymousUser".equals(userAuth.getPrincipal())) {
+			String username = SecurityContextHolder.getContext().getAuthentication().getName();
+			User user = userRepository.findByUsername(username);
+			Exemple exemple = exempleRepository.findById(exempleId).orElseThrow();
+			Competence competence = competenceRepository.findById(cpId).orElseThrow();
+			exemple.getCompetences().removeIf(cp -> cpId.equals(cp.getId()));
+			exempleRepository.save(exemple);
+			competenceRepository.save(competence);
+			model.addAttribute("user", user);
+			model.addAttribute("logged", true);
+			model.addAttribute("exemples", user.getExemples());
+			model.addAttribute("hasExemple", !user.getExemples().isEmpty());
+		}
+		return "exemples";
+	}
+	
+	
 	
 }

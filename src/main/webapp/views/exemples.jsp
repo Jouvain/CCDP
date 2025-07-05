@@ -17,6 +17,14 @@
 				<h2>Intitulé : ${ex.title }</h2>
 				<c:forEach var="cp" items="${ex.competences }" >
 					<h3>CP : ${cp.title } </h3>
+						<form action="${pageContext.request.contextPath }/removeCpFromEx" method="post" class="addForm">
+							<input type="hidden" name="cpId" value="${cp.id}" />			
+							<input type="hidden" name="exempleId" value="${ex.id}" />  
+							<div>
+								<label>${cp.title }</label>
+								<button>Enlever</button>
+							</div>
+						</form>
 				</c:forEach>
 				<a href="${pageContext.request.contextPath }/integrateCp?exempleId=${ex.id}" ><button>Ajouter une CP</button></a>
 				<a href="${pageContext.request.contextPath }/deleteExemple?exempleId=${ex.id}" ><button>Effacer l'exemple ${ex.title }</button></a>
