@@ -100,7 +100,18 @@ public class DossierController {
 			String username = SecurityContextHolder.getContext().getAuthentication().getName();
 			User user = userRepository.findByUsername(username);
 			Dossier dossier = user.getDossier();
+			List<Exemple> exemples = user.getExemples();
 			if(dossier != null) {
+
+				if(!exemples.isEmpty()) {
+					for (Exemple exemple : exemples) {
+						exemple.setCompetences(null);
+						exemple.setBloc(null);
+						exempleRepository.save(exemple);
+					}
+					exempleRepository.deleteAll(user.getExemples());
+				}
+				user.getExemples().clear();
 	            user.setDossier(null); 
 	            userRepository.save(user); 
 	            dossierRepository.deleteById(dossier.getId());
@@ -289,7 +300,26 @@ public class DossierController {
 	}
 	
 	
-	
+	@GetMapping("/removeExFromBloc")
+	public String removeExFromBloc(@RequestParam Integer exempleId, @RequestParam Integer blocId, Model model) {
+		var userAuth = SecurityContextHolder.getContext().getAuthentication();
+		if(userAuth != null && !"anonymousUser".equals(userAuth.getPrincipal())) {
+			String username = SecurityContextHolder.getContext().getAuthentication().getName();
+			User user = userRepository.findByUsername(username);
+			Bloc bloc = blocRepository.findById(blocId).orElseThrow();
+			Exemple exemple = exempleRepository.findById(exempleId).orElseThrow();
+			
+			exemple.setBloc(null);
+			exempleRepository.save(exemple);
+			bloc.getExemples().removeIf(e -> e.getId().equals(exemple.getId()));
+			blocRepository.save(bloc);
+			model.addAttribute("user", user);
+			model.addAttribute("logged", true);
+			model.addAttribute("dossier", user.getDossier());
+			model.addAttribute("hasDossier", user.getDossier() != null);
+		}
+		return "dossier";
+	}
 	
 	
 	

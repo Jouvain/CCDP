@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -20,7 +21,16 @@
 					<h3>Bloc : ${bloc.title}</h3>
 					<a href="${pageContext.request.contextPath }/deleteBloc?blocId=${bloc.id}"><button>Effacer le ${bloc.title} </button></a>
 					<a href="${pageContext.request.contextPath }/addCp?blocId=${bloc.id}"><button>Ajouter une compétence</button></a>
-					<a href="${pageContext.request.contextPath }/integrateExemple?blocId=${bloc.id}"><button>Intégrer un exemple de pratique</button></a>
+					<c:if test="${fn:length(bloc.exemples) < 3}">
+						<a href="${pageContext.request.contextPath }/integrateExemple?blocId=${bloc.id}"><button>Intégrer un exemple de pratique</button></a>
+					</c:if>
+
+					<ul>
+						<c:forEach var="ex" items="${bloc.exemples }">
+							<li>${ex.title }</li>
+							<a href="${pageContext.request.contextPath }/removeExFromBloc?exempleId=${ex.id}&blocId=${bloc.id}" ><button>Enlever ${ex.title }</button></a>
+						</c:forEach>
+					</ul>
 					<ul>
 						<c:forEach var="cp" items="${bloc.competences}">
 							<li>${cp.title}</li>
