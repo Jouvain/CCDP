@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -10,6 +11,9 @@
 <body>
 	<jsp:include page="header.jsp" />
 	<h1>Bonjour ${user.firstname } !</h1>
+	<c:if test="${user.dossier == null }">
+		<p>Vous n'avez pas encore de dossier, pensez à en faire un !</p>
+	</c:if>
 	<c:choose>
 		<c:when test="${hasExemple }">
 			<p>La liste de vos exemples de pratique professionnelle :</p>
