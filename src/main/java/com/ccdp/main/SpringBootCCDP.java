@@ -29,11 +29,15 @@ public class SpringBootCCDP implements ApplicationRunner{
 	
 	@Override
 	public void run(ApplicationArguments args) throws Exception {
-		userRepository.saveAll(
-				List.of(
-						new User("Mack", "MACKY", "user", encoder.encode("user"))
-				)
-		);
+		if(userRepository.count()==0)
+		{
+			userRepository.saveAll(
+					List.of(
+							new User("Mack", "MACKY", "user", encoder.encode("user"))
+					)
+			);			
+		}
+
 	}
 	
 

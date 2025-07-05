@@ -20,6 +20,7 @@
 					<h3>Bloc : ${bloc.title}</h3>
 					<a href="${pageContext.request.contextPath }/deleteBloc?blocId=${bloc.id}"><button>Effacer le ${bloc.title} </button></a>
 					<a href="${pageContext.request.contextPath }/addCp?blocId=${bloc.id}"><button>Ajouter une compétence</button></a>
+					<a href="${pageContext.request.contextPath }/integrateExemple?blocId=${bloc.id}"><button>Intégrer un exemple de pratique</button></a>
 					<ul>
 						<c:forEach var="cp" items="${bloc.competences}">
 							<li>${cp.title}</li>

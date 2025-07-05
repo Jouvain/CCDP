@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import com.ccdp.main.repositories.BlocRepository;
 import com.ccdp.main.repositories.CompetenceRepository;
 import com.ccdp.main.repositories.DossierRepository;
+import com.ccdp.main.repositories.ExempleRepository;
 import com.ccdp.main.repositories.UserRepository;
 
 import jakarta.validation.Valid;
@@ -20,7 +21,10 @@ import jakarta.validation.Valid;
 import com.ccdp.main.entities.Bloc;
 import com.ccdp.main.entities.Competence;
 import com.ccdp.main.entities.Dossier;
+import com.ccdp.main.entities.Exemple;
 import com.ccdp.main.entities.User;
+import org.springframework.web.bind.annotation.RequestBody;
+
 
 @Controller
 public class DossierController {
@@ -35,6 +39,9 @@ public class DossierController {
 	
 	@Autowired
 	private CompetenceRepository competenceRepository;
+	
+	@Autowired
+	private ExempleRepository exempleRepository;
 
 	@GetMapping("/dossier")
 	public String dossier(Model model) {
@@ -209,6 +216,47 @@ public class DossierController {
 		}
 		return "redirect:/dossier";
 	}
+	
+	
+	@GetMapping("/integrateExemple")
+	public String integrateExemple(@RequestParam Integer blocId, Model model) {
+		var userAuth = SecurityContextHolder.getContext().getAuthentication();
+		if(userAuth != null && !"anonymousUser".equals(userAuth.getPrincipal())) {
+			String username = SecurityContextHolder.getContext().getAuthentication().getName();
+			User user = userRepository.findByUsername(username);
+			Bloc bloc = blocRepository.findById(blocId).orElseThrow();
+			model.addAttribute("user", user);
+			model.addAttribute("bloc", bloc);
+			model.addAttribute("hasExemples", !user.getExemples().isEmpty());
+		}		
+		return "integrateExemple";
+	}
+	
+	@PostMapping("/integrateExemple")
+	public String integrateExemple(@RequestParam Integer exempleId, @RequestParam Integer blocId, Model model) {
+		var userAuth = SecurityContextHolder.getContext().getAuthentication();
+		if(userAuth != null && !"anonymousUser".equals(userAuth.getPrincipal())) {
+			String username = SecurityContextHolder.getContext().getAuthentication().getName();
+			User user = userRepository.findByUsername(username);
+			Bloc bloc = blocRepository.findById(blocId).orElseThrow();
+			Exemple exemple = exempleRepository.findById(exempleId).orElseThrow();
+			bloc.getExemples().add(exemple);
+			exemple.setBloc(bloc);
+			exempleRepository.save(exemple);
+			blocRepository.save(bloc);
+			model.addAttribute("user", user);
+			model.addAttribute("logged", true);
+			model.addAttribute("dossier", user.getDossier());
+			model.addAttribute("hasDossier", user.getDossier() != null);
+		}		
+		return "redirect:/dossier";
+	}
+	
+	
+	
+	
+	
+	
 	
 	
 }
