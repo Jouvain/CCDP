@@ -54,30 +54,34 @@ public class DossierController {
 		if(userAuth != null && !"anonymousUser".equals(userAuth.getPrincipal())) {
 			String username = SecurityContextHolder.getContext().getAuthentication().getName();
 			User user = userRepository.findByUsername(username);
+			Dossier dossier = user.getDossier();
+			Boolean hasDossier = dossier != null;
 			
-			List<Bloc> blocs = user.getDossier().getBlocs();
-			List<Integer> cpCountsList =  new ArrayList<Integer>();
-			for (Bloc bloc : blocs) {
-				for (Competence cp : bloc.getCompetences()) {
-					cpCountsList.add(countCpInExemples(bloc, cp));	
-					System.out.println(countCpInExemples(bloc, cp));
+			if(hasDossier) {
+				List<Bloc> blocs = user.getDossier().getBlocs();
+				List<Integer> cpCountsList =  new ArrayList<Integer>();
+				for (Bloc bloc : blocs) {
+					for (Competence cp : bloc.getCompetences()) {
+						cpCountsList.add(countCpInExemples(bloc, cp));	
+						System.out.println(countCpInExemples(bloc, cp));
+					}
 				}
-			}
-			Map<Integer, Integer> cpCountMap = new HashMap<>();
-			for (Bloc bloc : blocs) {
-			    for (Competence cp : bloc.getCompetences()) {
-			        int count = countCpInExemples(bloc, cp);
-			        cpCountMap.put(cp.getId(), count);
-			    }
-			}
-			model.addAttribute("cpCountMap", cpCountMap);
-			
+				Map<Integer, Integer> cpCountMap = new HashMap<>();
+				for (Bloc bloc : blocs) {
+				    for (Competence cp : bloc.getCompetences()) {
+				        int count = countCpInExemples(bloc, cp);
+				        cpCountMap.put(cp.getId(), count);
+				    }
+				}
+				model.addAttribute("cpCountMap", cpCountMap);
+				model.addAttribute("cpCountsList", cpCountsList);
+				model.addAttribute("dossier", user.getDossier());
+			}	
 			
 			model.addAttribute("user", user);
 			model.addAttribute("logged", true);
-			model.addAttribute("dossier", user.getDossier());
-			model.addAttribute("hasDossier", user.getDossier() != null);
-			model.addAttribute("cpCountsList", cpCountsList);
+			model.addAttribute("hasDossier", hasDossier);
+
 		}
 
 		
