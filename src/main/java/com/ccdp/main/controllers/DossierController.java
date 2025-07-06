@@ -1,6 +1,9 @@
 package com.ccdp.main.controllers;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -51,11 +54,33 @@ public class DossierController {
 		if(userAuth != null && !"anonymousUser".equals(userAuth.getPrincipal())) {
 			String username = SecurityContextHolder.getContext().getAuthentication().getName();
 			User user = userRepository.findByUsername(username);
+			
+			List<Bloc> blocs = user.getDossier().getBlocs();
+			List<Integer> cpCountsList =  new ArrayList<Integer>();
+			for (Bloc bloc : blocs) {
+				for (Competence cp : bloc.getCompetences()) {
+					cpCountsList.add(countCpInExemples(bloc, cp));	
+					System.out.println(countCpInExemples(bloc, cp));
+				}
+			}
+			Map<Integer, Integer> cpCountMap = new HashMap<>();
+			for (Bloc bloc : blocs) {
+			    for (Competence cp : bloc.getCompetences()) {
+			        int count = countCpInExemples(bloc, cp);
+			        cpCountMap.put(cp.getId(), count);
+			    }
+			}
+			model.addAttribute("cpCountMap", cpCountMap);
+			
+			
 			model.addAttribute("user", user);
 			model.addAttribute("logged", true);
 			model.addAttribute("dossier", user.getDossier());
 			model.addAttribute("hasDossier", user.getDossier() != null);
+			model.addAttribute("cpCountsList", cpCountsList);
 		}
+
+		
 		return "dossier";
 	}
 	
@@ -322,6 +347,16 @@ public class DossierController {
 	}
 	
 	
+	
+	public int countCpInExemples(Bloc bloc, Competence cp) {
+	    int count = 0;
+	    for (Exemple exemple : bloc.getExemples()) {
+	        if (exemple.getCompetences().contains(cp)) {
+	            count++;
+	        }
+	    }
+	    return count;
+	}
 	
 	
 	

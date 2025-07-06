@@ -26,14 +26,15 @@
 					</c:if>
 
 					<ul>
-						<c:forEach var="ex" items="${bloc.exemples }">
+						<c:forEach var="ex" items="${bloc.exemples }" >
 							<li>${ex.title }</li>
 							<a href="${pageContext.request.contextPath }/removeExFromBloc?exempleId=${ex.id}&blocId=${bloc.id}" ><button>Enlever ${ex.title }</button></a>
 						</c:forEach>
 					</ul>
 					<ul>
-						<c:forEach var="cp" items="${bloc.competences}">
+						<c:forEach var="cp" items="${bloc.competences}" >
 							<li>${cp.title}</li>
+							<p>${cpCountMap[cp.id]}</p>
 							<a href="${pageContext.request.contextPath }/deleteCp?cpId=${cp.id}&blocId=${bloc.id}" ><button>Effacer ${cp.title }</button></a>
 						</c:forEach>
 					</ul>
