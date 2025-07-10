@@ -13,11 +13,11 @@
 					<li><a href="${pageContext.request.contextPath}/dossier">Dossier</a></li>
 					<li><a href="${pageContext.request.contextPath}/exemples">Exemples</a></li>
 					<li><a href="${pageContext.request.contextPath}/compte">Compte</a></li>
-					<li><a href="${pageContext.request.contextPath}/logout"><button>Déconnexion</button></a></li>
+					<li><a href="${pageContext.request.contextPath}/logout"><button class="btn--light">Déconnexion</button></a></li>
 				</c:when>
 				<c:otherwise>
 					<!-- Non connecté -->
-					<li><a href="${pageContext.request.contextPath}/login"><button>Connexion</button></a></li>
+					<li><a href="${pageContext.request.contextPath}/login"><button class="btn--light">Connexion</button></a></li>
 				</c:otherwise>
 			</c:choose>
 		</ul>

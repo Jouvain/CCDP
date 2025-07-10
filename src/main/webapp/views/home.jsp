@@ -13,7 +13,7 @@
 <body>
 	<jsp:include page="header.jsp" />
 
-	<main>
+	<main class="homeCenter">
 		<c:choose>
 			<c:when test="${logged}">
 				<h1>Bienvenue, ${user.firstname}</h1>
@@ -22,14 +22,17 @@
 				<h1>Bienvenue de la part du Compagnon de Complétion du Dossier
 					Professionnel !</h1>
 				<img src="${pageContext.request.contextPath}/images/robot-face.svg"
-					alt="Compagnon CCDP" />
-				<p>Avec CCDP :</p>
-				<ul>
-					<Li>Visualisez d'un coup d'oeil où en est votre dossier !</Li>
-					<Li>Ne manquez aucune CP, et comptez vos combbos !</Li>
-					<Li>Ajoutez, supprimez et affectez facilement vos exemples !</Li>
-				</ul>
-				<a href="${pageContext.request.contextPath }/signup"><button>S'inscrire</button></a>
+					alt="Compagnon CCDP" class="homePortrait" />
+				<div>
+					<p>Avec CCDP :</p>
+					<ul>
+						<Li>Visualisez d'un coup d'oeil où en est votre dossier !</Li>
+						<Li>Ne manquez aucune CP, et comptez vos combbos !</Li>
+						<Li>Ajoutez, supprimez et affectez facilement vos exemples !</Li>
+					</ul>
+				</div>
+
+				<a href="${pageContext.request.contextPath }/signup"><button class="btn">S'inscrire</button></a>
 			</c:otherwise>
 		</c:choose>
 
