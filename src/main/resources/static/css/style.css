@@ -163,4 +163,24 @@ main {
 	margin-left: 20px;
 }
 
+.cpScoring {
+	display: flex;
+	gap: 5px;
+	align-items: center;
+}
+
+.dot {
+	width: 12px;
+	height: 12px;
+	border-radius: 50%;
+	display: inline-block;
+}
+
+.dot--filled {
+	background-color: #10b981; /* vert émeraude */
+}
+
+.dot--empty {
+	background-color: #e5e7eb; /* gris clair */
+}
 

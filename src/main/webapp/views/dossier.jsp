@@ -37,9 +37,16 @@
 									<div class="cpInBlocInfos">
 										<p> CP : ${cp.title} </p>
 										<div class="cpScoring">
-											<c:forEach var="i" begin="1" end="${cpCountMap[cp.id] }">
-												<p>*</p>
-											</c:forEach>
+										    <c:forEach var="i" begin="1" end="3">
+										        <c:choose>
+										            <c:when test="${i <= cpCountMap[cp.id]}">
+										                <span class="dot dot--filled"></span>
+										            </c:when>
+										            <c:otherwise>
+										                <span class="dot dot--empty"></span>
+										            </c:otherwise>
+										        </c:choose>
+										    </c:forEach>
 										</div>
 									</div>
 									<a href="${pageContext.request.contextPath }/deleteCp?cpId=${cp.id}&blocId=${bloc.id}" ><button class="btn--light btn--small">Effacer ${cp.title }</button></a>								
