@@ -49,12 +49,12 @@
 						</div>
 
 					</c:forEach>
-					<a href="${pageContext.request.contextPath }/addExemple"><button class="btn">Ajouter
+					<a href="${pageContext.request.contextPath }/addExemple"><button class="btn btn--farAway">Ajouter
 							un exemple</button></a>
 				</c:when>
 				<c:otherwise>
 					<p>Vous n'avez pas encore d'exemple !</p>
-					<a href="${pageContext.request.contextPath }/addExemple"><button class="btn">Ajouter
+					<a href="${pageContext.request.contextPath }/addExemple"><button class="btn btn--farAway">Ajouter
 							un exemple</button></a>
 				</c:otherwise>
 			</c:choose>

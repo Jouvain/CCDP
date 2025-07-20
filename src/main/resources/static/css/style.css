@@ -93,14 +93,21 @@ main {
 	cursor: pointer;
 	font-weight: bold;
 }
+.btn--farAway {
+	margin-top: 15px;
+}
 .loneTitle {
 	text-align: center;
 	margin: 5%;
+}
+.btn--small {
+	padding: 5px;
 }
 .oneLinerForm {
 	display: flex;
 	justify-content: space-evenly;
 	align-items: center;
+	margin: 15px;
 }
 
 .mainExemples {
@@ -121,8 +128,10 @@ main {
 	border-radius: 5px;
 	padding: 5px;
 	margin: 5px;
+	width: 90%;
 }
 .cpInExemple {
 	margin: 10px;
 }
+
 
