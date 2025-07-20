@@ -8,6 +8,7 @@
 <title>CCDP - Accueil</title>
 <link rel="stylesheet"
 	href="${pageContext.request.contextPath}/css/style.css">
+
 </head>
 
 <body>
@@ -16,10 +17,10 @@
 	<main class="homeCenter">
 		<c:choose>
 			<c:when test="${logged}">
-				<h1>Bienvenue, ${user.firstname}</h1>
+				<h1 class="lemon-regular">Bienvenue, ${user.firstname}</h1>
 			</c:when>
 			<c:otherwise>
-				<h1>Bienvenue de la part du Compagnon de Complétion du Dossier
+				<h1 class="lemon-regular">Bienvenue de la part du Compagnon de Complétion du Dossier
 					Professionnel !</h1>
 				<img src="${pageContext.request.contextPath}/images/robot-face.svg"
 					alt="Compagnon CCDP" class="homePortrait" />
