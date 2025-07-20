@@ -133,5 +133,34 @@ main {
 .cpInExemple {
 	margin: 10px;
 }
+.exemplesGallery {
+	display: flex;
+	justify-content: space-evenly;
+}
+
+.exempleInBloc {
+	margin: 10px;
+	border: 1px solid blue;
+	border-radius: 5px;
+	width: 30%;
+	display: flex;
+	justify-content: space-between;
+	padding: 5px;
+	align-items: center;
+}
+
+.cpInBloc {
+	display: flex;
+	justify-content: space-between;
+	margin: 10px;
+}
+.cpInBlocInfos {
+	display: flex;
+}
+.cpScoring {
+	display: flex;
+	align-items: center;
+	margin-left: 20px;
+}
 
 
