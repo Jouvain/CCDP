@@ -60,6 +60,8 @@ main {
 	background-color: #f5f6f8;
 	padding-bottom : 10px;
 	min-height: 80vh;
+	width: 100%;
+	max-width: 100%;
 }
 
 .homeCenter {
@@ -184,3 +186,159 @@ main {
 	background-color: #e5e7eb; /* gris clair */
 }
 
+/* === Responsive design pour mobiles et tablettes === */
+@media screen and (max-width: 768px) {
+
+	/* Viewport obligatoire (dans <head>, pas ici) */
+	/* <meta name="viewport" content="width=device-width, initial-scale=1.0"> */
+	
+	body {
+	margin: 0;
+	padding: 0;
+	overflow-x: hidden;
+	}
+
+	/* --- Header --- */
+	header {
+		flex-direction: column;
+		align-items: flex-start;
+	}
+	header ul {
+		flex-direction: column;
+		width: 100%;
+		gap: 10px;
+	}
+	header li {
+		width: 100%;
+		justify-content: flex-start;
+	}
+
+	/* --- Accueil --- */
+	.homeCenter {
+		height: auto;
+		padding: 0 20px;
+		padding-bottom: 30px;
+	}
+	.homePortrait {
+		width: 80%;
+		height: auto;
+		margin: 15px 0;
+	}
+	.homeCenter ul li {
+	margin: 0 15px;
+	}
+
+	.homeCenter .btn {
+		margin: 20px 0;
+	}
+
+
+	/* --- Formulaires --- */
+	.oneLinerForm {
+		flex-direction: column;
+		align-items: stretch;
+		gap: 15px;
+	}
+	.oneLinerForm input {
+		width: 100%;
+		padding: 10px;
+	}
+
+	/* --- Boutons --- */
+	.btn, .btn--light, .btn--small {
+		width: 100%;
+		text-align: center;
+	}
+	.btn--farAway {
+		margin-top: 20px;
+	}
+
+	/* --- Dossier --- */
+	.dossierControls {
+		display: flex;
+		flex-direction: column;
+		gap: 10px;
+		margin-bottom: 20px;
+	}
+	.cardsGallery {
+		flex-direction: column;
+		align-items: stretch;
+	}
+	.exempleCard {
+		width: 100%;
+		max-width: 100%;
+		box-sizing: border-box;
+		padding: 10px;
+		margin: 10px 0;
+	}
+	.exempleCard > a {
+		display: block;
+		margin: 8px 0;
+	}
+	.exempleCard > a > button {
+		width: 100%;
+	}
+
+	.cpInBloc {
+		flex-direction: column;
+		align-items: flex-start;
+		gap: 8px;
+		margin-bottom: 15px;
+	}
+
+	.cpInBlocInfos {
+		display: flex;
+		flex-direction: column;
+		gap: 5px;
+	}
+
+	.cpScoring {
+		display: flex;
+		gap: 6px;
+		align-items: center;
+		justify-content: flex-start;
+	}
+
+	.cpInBloc button {
+		width: 100%;
+	}
+
+	.exemplesGallery {
+		display: flex;
+		flex-direction: column;
+		align-items: stretch;
+		gap: 10px;
+		margin-top: 10px;
+	}
+
+	.exempleInBloc {
+		width: 100%;
+		max-width: 100%;
+		box-sizing: border-box;
+		overflow-x: hidden;
+		padding: 10px;
+		margin-bottom: 10px;
+		border: 1px solid blue;
+		border-radius: 5px;
+		background-color: #f9f9f9;
+		margin: 10px 0;
+	}
+	
+	.exempleInBloc button {
+		width: 100%;
+	}
+
+	/* --- Exemples --- */
+	.cpInExemple {
+		margin-bottom: 10px;
+	}
+	.cpInExemple button {
+		width: 100%;
+	}
+
+	/* --- Compte --- */
+	.cardsGallery ul {
+		padding: 0 20px;
+		text-align: center;
+	}
+}
